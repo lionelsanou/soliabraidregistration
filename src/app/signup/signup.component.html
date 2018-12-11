@@ -1,0 +1,62 @@
+
+  <img  height="200" width="200" src="../../assets/images/SoliaBraidsLogo.gif">
+  <div class="row">
+    <div class="col-md-6">
+      
+        <form #f="ngForm" (ngSubmit)=submit(f)>
+<input type="hidden" [(ngModel)]="userIdText" name="userId" id='userId'>
+            <div class="col-md-12">
+              <div class="form-group">                
+                    <label for="firstName">Full Name*</label>
+                    <input required [(ngModel)]="firstNameText" name="firstName" id='firstName'#firstName="ngModel" (change)="log(firstName)" type="text" class="form-control">
+                    <div class="alert alert-danger" *ngIf="firstName.touched &&!firstName.dirty && !firstName.valid">
+                      Full Name is Required
+                    </div>
+                </div> 
+              </div>
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="phone">Phone*</label>
+                  <input [(ngModel)]="phoneText" name="phone" id="phone" #phone="ngModel" type="tel" class="form-control">
+                  <div class="alert alert-danger" *ngIf="phone.touched && !phone.valid">
+                    <div *ngIf="phone.errors.required">Phone is required</div>
+                    <div *ngIf="phone.errors.pattern">Phone format is not correct</div>
+                  </div>
+                </div>
+                </div>
+              <div class="col-md-12">           
+              <div class="form-group">
+                <label for="braidStyle">Braid Style</label>
+                <input required [(ngModel)]="braidStyleText" name="braidStyle" type="text" id="braidStyle" #lastName="ngModel" class="form-control">
+              </div>              
+              <button class="btn btn-primary btn-lg btn-block">Submit</button>
+              </div>                         
+             </form>
+    </div>
+    <div class="col-md-6">
+      <table class="table table-hover">
+        <thead>
+          <th>Full Name</th>
+          <th>Phone Number</th> 
+          <th>Braid Style</th>
+          <th></th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let customer of users">
+            <td (click)="onEdit(customer)">{{customer.firstName}}</td>
+            <td (click)="onEdit(customer)">{{customer.phone}}</td>
+            <td (click)="onEdit(customer)">{{customer.braidStyle}}</td>
+            <td (click)="onDelete(customer)"><a class="btn text-danger"><i class="fa fa-trash"></i></a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+</div>
+
+
+
+
+
+
+
+
