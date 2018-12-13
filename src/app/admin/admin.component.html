@@ -1,0 +1,33 @@
+<div class="col-md-3">
+  <button class="btn btn-warning btn-lg btn-block" (click)="navigateSignUpPage()">SignUp</button>
+  </div>
+  <img  height="200" width="200" src="../../assets/images/SoliaBraidsLogo.gif">
+  <div class="row">
+    <div class="col-md-12">
+      <table class="table table-hover">
+        <thead>
+          <th>Full Name</th>
+          <th>Phone Number</th> 
+          <th>Braid Style</th>
+          <th>Date</th>
+          <th></th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let customer of users">
+            <td>{{customer.firstName}}</td>
+            <td>{{customer.phone}}</td>
+            <td>{{customer.braidStyle}}</td>
+            <td>{{customer.date}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+</div>
+
+
+
+
+
+
+
+

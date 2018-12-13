@@ -14,10 +14,10 @@ import { AppComponent } from './app.component';
 import { SignupComponent } from './signup/signup.component';
 import { NotfoundpageComponent } from './notfoundpage/notfoundpage.component';
 import { ConfirmationComponent } from './confirmation/confirmation.component';
-import { HttptutorialComponent } from './httptutorial/httptutorial.component';
 import { environment } from '../environments/environment';
 import { BackendService } from './services/backend.service';
 import { DataService } from './services/dataService';
+import { AdminComponent } from './admin/admin.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +25,7 @@ import { DataService } from './services/dataService';
     SignupComponent,
     NotfoundpageComponent,
     ConfirmationComponent,
-    HttptutorialComponent
+    AdminComponent
   ],
   imports: [
     BrowserModule,
@@ -39,7 +39,7 @@ import { DataService } from './services/dataService';
       {path:'',component:SignupComponent},
       {path:'signup',component:SignupComponent},
       {path:'confirmation',component:ConfirmationComponent},
-      {path:'httptutorial',component:HttptutorialComponent},
+      {path:'admin',component:AdminComponent},
       {path:'**',component:NotfoundpageComponent}
     ])
   ],
