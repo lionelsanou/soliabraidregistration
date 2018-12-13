@@ -13,90 +13,89 @@ import { DataService } from '../services/dataService';
   styleUrls: ['./signup.component.css']
 })
 export class SignupComponent implements OnInit {
-  user:User;
-  users:User[];
+  user: User;
+  users: User[];
   items: Observable<any[]>;
-  userId:string;
-  firstNameText:string;
-  phoneText:number;
-  braidStyleText:string;
-  userIdText:string;
-  log(x){
-    //console.log(x);
-  }
-  userPromise:Promise<firebase.firestore.DocumentReference>
+  userId: string;
+  firstNameText: string;
+  phoneText: number;
+  braidStyleText: string;
+  userIdText: string;
+  userPromise: Promise<firebase.firestore.DocumentReference>
 
-  submit(t){
+  submit(t) {
 
-    this.user=t.value;
-    this.user.date=this.getCurrentTime();
+    this.user = t.value;
+    this.user.date = this.getCurrentTime();
     console.log(this.user);
-    if(this.user.userId!=null){
+    if (this.user.userId != null) {
       console.log("I am updating");
       this.backendService.updateUser(this.user);
       this.resetForm();
-    }else{
-    this.userPromise=this.backendService.registration(this.user);
-    this.userPromise.then(function(docRef){
-      console.log(docRef.id);
-      return docRef.id;
-    }).catch(function(error){
-      console.log("Error Getting the document", error);
-    }).then(result=>{
-      //this.userId=result;
-      //this.user.id=this.userId;
-      console.log("result "+result);
-     // console.log(this.userId);
-     t=result;
-     this.user.userId=t;
-     this.backendService.getUser(result);
-     this.dto.setUser(this.user);
-     //console.log(JSON.stringify(this.user));
-     //this.backendService.userDataService.user=this.user;
-     //console.log("Inside DataService "+JSON.stringify(this.dto.getUser()));
-     //this.routerService.navigate(['/confirmation']);    
-    });
-    this.resetForm();
-   
+    } else {
+      this.userPromise = this.backendService.registration(this.user);
+      this.userPromise.then(function (docRef) {
+        console.log(docRef.id);
+        return docRef.id;
+      }).catch(function (error) {
+        console.log("Error Getting the document", error);
+      }).then(result => {
+        //this.userId=result;
+        //this.user.id=this.userId;
+        console.log("result " + result);
+        // console.log(this.userId);
+        t = result;
+        this.user.userId = t;
+        //this.backendService.getUser(result);
+        //this.dto.setUser(this.user);
+        //console.log(JSON.stringify(this.user));
+        //this.backendService.userDataService.user=this.user;
+        //console.log("Inside DataService "+JSON.stringify(this.dto.getUser()));
+        //this.routerService.navigate(['/confirmation']);    
+      });
+      this.resetForm();
+
+    }
+
   }
-     
+  navigateAdminPage() {
+    this.routerService.navigate(['/admin']);
   }
-  constructor(public dto:DataService,private routerService:Router,private db: AngularFirestore,private backendService:BackendService ) { 
+  constructor(public dto: DataService, private routerService: Router, private db: AngularFirestore, private backendService: BackendService) {
     //this.toastr.setRootViewContainerRef(vcr);
   }
-  getCurrentTime(){
+  userObjectIsDefined() {
+    if (this.user) {
+      return true;
+    } else {
+      return false;
+    }
+
+  }
+  getCurrentTime() {
     let now = new Date().toLocaleString();
     return now;
   }
-  resetForm(){
-    this.firstNameText="";
-    this.phoneText=undefined;
-    this.braidStyleText="";
-    this.userIdText=null;
+  resetForm() {
+    this.firstNameText = "";
+    this.phoneText = undefined;
+    this.braidStyleText = "";
+    this.userIdText = null;
   }
-  onEdit(customer:User){
-   console.log(customer);
-    this.firstNameText=customer.firstName;
-    this.phoneText=customer.phone;
-    this.braidStyleText=customer.braidStyle;
-    this.userIdText=customer.userId;
+  onEdit() {
+    this.firstNameText = this.user.firstName;
+    this.phoneText = this.user.phone;
+    this.braidStyleText = this.user.braidStyle;
+    this.userIdText = this.user.userId;
   }
-  onDelete(customer:User){
-    console.log("Delete User "+customer);
-    this.backendService.deleteUser(customer);
+  onDelete() {
+    console.log("Delete User " + this.user);
+    this.backendService.deleteUser(this.user);
     this.resetForm();
   }
   ngOnInit() {
-    
-    this.backendService.getUsers().subscribe(actionArray=>{
-      this.users=actionArray.map(item=>{
-        
-        return {
-                userId:item.payload.doc.id,
-                ...item.payload.doc.data()
-              } as User;
-      })
-    });
+
+
   }
 
 }

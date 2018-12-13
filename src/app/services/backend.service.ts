@@ -15,10 +15,7 @@ export class BackendService{
     public registration(user:User){
         delete user.userId;
         console.log(user);
-        this.userDataService=new DataService();
-        this.dto.setUser(user);
-        console.log("Yabaku "+JSON.stringify(this.dto.getUser()));
-        return this.db.collection('users').add(user);
+        return this.userCollection.add(user);
     }
 
     public updateUser(user:User){
@@ -40,9 +37,11 @@ export class BackendService{
         
     }
     public getUser(userId){
+        console.log("a la la "+userId);
         return this.db.doc(`users/${userId}`).ref.get();
     }
     constructor(private db: AngularFirestore,private dto:DataService){
+        //the below is the reference to our database
         this.userCollection=this.db.collection('users');
         this.users=this.userCollection.valueChanges();
     };   
